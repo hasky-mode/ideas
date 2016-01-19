@@ -1,0 +1,107 @@
+#+TITLE: Husky Mode
+#+AUTHOR: Mark Karpov
+#+DATE: Tuesday, 19 January 2016
+#+STARTUP: showeverything
+
+* Why start it from scratch?
+
+  Let's face the truth — =haskell-mode= is not the best Emacs mode. Not even
+  close to that. It cannot even reliably handle automatic indentation
+  (ridiculously, it has /two/ minor modes for indentation and none that works
+  well). Not to mention different styles of indentation with configurable
+  parameters like indentation step. There are little nasty things all over
+  the place, for example try to open REPL and cancel it when it asks its
+  questions (wrong questions by default BTW and wrong interface in general)
+  — what do you get? Nonoperational empty buffer.
+
+  =haskell-mode= is old enough to be stable, yet most part of it just does not
+  work really well. First you think that you will contribute to it and help
+  the community… until you see its source code. Absolute mess. Undocumented,
+  massive, and even dangerous (non-prefixed symbols are OK, for
+  example). That's just low-quality package, so you think that really heavy
+  refactoring is necessary, and that's right — we should just rewrite it
+  from scratch — that's the way.
+
+  =haskell-mode= has no human resources to perform heavy refactoring. I don't
+  think its users are so innumerous, but the whole thing doesn't look good
+  enough to stimulate time-investment. It still cannot drop all that trash
+  it accumulated through the years, because you know, someone may be
+  accustomed to some piece of that trash. Look at Magit — probably the best
+  Emacs package — it just changes things and it's getting better and better.
+
+  Actual list of must-have features that really should work well is quite
+  short. Get them right once and don't let them degrade and you are set for
+  success. It's possible to write decent lightweight mode for Haskell from
+  scratch in maybe a month (I /could/ do it, if I had time, and maybe I will)
+  if we leverage good existing high-quality projects in Emacs and Haskell
+  ecosystems.
+
+  Emacs is cool. Haskell is cool. Why their intersection should be so ugly?
+
+* Haskell IDE Engine
+
+  I currently don't see much value in it. Combination of Flycheck and this
+  improved mode for Haskell (or =haskell-mode= while it's not done) will cover
+  all my needs. Flycheck uses HLint and Stack GHC with =-Wall= already —
+  combined with built-in complete interface to Stack (will use plain old CLI
+  under the hood) and easy REPL I'll have everything I need. And Flycheck is
+  not slow.
+
+* Desired functionality
+
+** Syntax highlighting =easy=
+
+   Two things here: Cabal files and Haskell sources. In Haskell sources we
+   need to highlight Haddock markup in doc comments. See how it's currently
+   done in Org sources, =markdown-mode= sources, and what is in =haskell-mode=
+   so far.
+
+** Indentation =needs experiments, moderate=
+
+   It's too hard and error-prone to parse Haskell in Emacs Lisp. There is
+   [[https://github.com/chrisdone/structured-haskell-mode][Structured Haskell Mode]], but it's too slow (microseconds matter when you
+   type and get visual response, there are studies about this stuff), it's
+   too flashy. It does not work with my [[https://github.com/mrkkrp/modalka][Modalka]]. I guess Chris managed to
+   make it work with his God Mode, but I don't like it either, Modalka is
+   way superior, IMO (nothing personal, I like his other projects). However,
+   the idea with using Haskell to extract vector of source spans is
+   good. Perhaps, we could use the principle in not-so-flashy way and on
+   limited fragments when re-indenting is necessary.
+
+   What about Cabal files? Well, it would be better if we could use similar
+   approach as for Haskell sources — seems more robust.
+
+   Other thoughts: implement as minor mode, but turn on by default — user
+   should be able to use it out-of-box. Support for different styles and
+   indentation steps. The thing should be really flexible and well-designed.
+
+   This is really a thing that I would be glad to have in a bug-free,
+   lightweight, flexible, and fast form. Should be doable.
+
+** Complete interface to Stack à la Magit =moderate=
+
+   Cabal sucks, let's omit support for that thing. The hard thing here is
+   those pretty pop-ups. But there is [[https://github.com/abo-abo/hydra][Hydra]] and [[http://magit.vc/manual/magit-popup/][Magit popup]] itself as a
+   separate library. If we leverage one of these, it's not that hard. Use
+   what is worth re-using from [[https://github.com/mrkkrp/ebal][Ebal]] and then abandon it (this name
+   translates from Russian as “fucked”, and it supported only Cabal
+   originally and I looove Cabal, you know).
+
+** REPL =easy=
+
+   Make REPL as one of these Stack commands with the ability to select build
+   target, that's all. Steal some code from =haskell-mode=, maybe.
+
+* Possible incompatibility with other packages
+
+  I really care only for Flycheck, the rest I can handle. =flycheck-haskell=
+  depends on =haskell-mode= — too bad, but I can add built-in support into my
+  package or even make Flycheck a dependency and tune it more tightly (with
+  good results I guess). I can probably provide =husky-mode= with more
+  powerful interface to Haskell internals than in =haskell-mode= and make it
+  even better than =flycheck-haskell=. For a start, all the code is available
+  for hacking anyway.
+
+* Why “Husky”?
+
+  [[https://en.wikipedia.org/wiki/Husky][Huskies]] are cool, just like Haskell.
