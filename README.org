@@ -23,9 +23,9 @@
   from scratch — that's the way.
 
   =haskell-mode= has no human resources to perform heavy refactoring. I don't
-  think its users are so innumerous, but the whole thing doesn't look good
-  enough to stimulate time-investment. It still cannot drop all that trash
-  it accumulated through the years, because you know, someone may be
+  think its users are so innumerous, but the whole thing just doesn't look
+  good enough to stimulate time-investment. It still cannot drop all that
+  trash it accumulated through the years, because you know, someone may be
   accustomed to some piece of that trash. Look at Magit — probably the best
   Emacs package — it just changes things and it's getting better and better.
 
@@ -87,20 +87,48 @@
    translates from Russian as “fucked”, and it supported only Cabal
    originally and I looove Cabal, you know).
 
+   Also, commands like =stack haddock= and =stack test --coverage= should open
+   HTML reports in browser on success by default.
+
 ** REPL =easy=
 
    Make REPL as one of these Stack commands with the ability to select build
    target, that's all. Steal some code from =haskell-mode=, maybe.
 
+** Minor primitives for editing
+
+   Here are some things that are useful.
+
+*** Language pragmas management
+
+    There should be a command to add pragmas to current file. The command
+    should be able to find where to put those pragmas, how to keep them
+    sorted and beautiful. There should be various options. I have working
+    prototype in my configuration [[https://github.com/mrkkrp/dot-emacs/blob/master/mk/mk-haskell.el][here]].
+
+*** Imports management
+
+    This one should be really smart too. Automatically form list of imports
+    with configurable style. It should be able to add to list of exported
+    symbols and in general allow to work with all import syntax. I have
+    working prototype in my configuration [[https://github.com/mrkkrp/dot-emacs/blob/master/mk/mk-haskell.el][here]].
+
 * Possible incompatibility with other packages
 
-  I really care only for Flycheck, the rest I can handle. =flycheck-haskell=
-  depends on =haskell-mode= — too bad, but I can add built-in support into my
-  package or even make Flycheck a dependency and tune it more tightly (with
-  good results I guess). I can probably provide =husky-mode= with more
-  powerful interface to Haskell internals than in =haskell-mode= and make it
-  even better than =flycheck-haskell=. For a start, all the code is available
-  for hacking anyway.
+** Flycheck
+
+   I really care only for Flycheck, the rest I can handle. =flycheck-haskell=
+   depends on =haskell-mode= — too bad, but I can add built-in support into my
+   package or even make Flycheck a dependency and tune it more tightly (with
+   good results I guess). I can probably provide =husky-mode= with more
+   powerful interface to Haskell internals than in =haskell-mode= and make it
+   even better than =flycheck-haskell=. For a start, all the code is available
+   for hacking anyway.
+
+   Also, there is that problem with Cabal-generated macros (min-versions for
+   example). We should handle that decently while we're at it. Flycheck's
+   author doesn't care, so we have to do it ourselves. There is a hackish
+   solution in my config — a place to start our digging.
 
 * Why “Husky”?
 
