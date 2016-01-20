@@ -95,6 +95,12 @@
    Make REPL as one of these Stack commands with the ability to select build
    target, that's all. Steal some code from =haskell-mode=, maybe.
 
+** Creation of a new project
+
+   Handle generation of Cabal file here and other boilerplate as well. I
+   already have something like that in [[https://github.com/mrkkrp/ebal][Ebal]], but that can be greatly
+   improved.
+
 ** Minor primitives for editing
 
    Here are some things that are useful.
@@ -112,6 +118,11 @@
     with configurable style. It should be able to add to list of exported
     symbols and in general allow to work with all import syntax. I have
     working prototype in my configuration [[https://github.com/mrkkrp/dot-emacs/blob/master/mk/mk-haskell.el][here]].
+
+** The system should be able to diagnose what's wrong with it
+
+   It should give clear and understandable recommendations how to resolve
+   many common problems.
 
 * Possible incompatibility with other packages
 
