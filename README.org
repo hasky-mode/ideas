@@ -90,6 +90,12 @@
    Also, commands like =stack haddock= and =stack test --coverage= should open
    HTML reports in browser on success by default.
 
+** Normal navigation, jumping to functions
+
+   TAGS file should be generated automatically with =hasktags= when it's
+   missing or out-of-date. Of course it should work instantly and always,
+   without the need to start some sort of session.
+
 ** REPL =easy=
 
    Make REPL as one of these Stack commands with the ability to select build
