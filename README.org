@@ -1,4 +1,4 @@
-#+TITLE: Husky Mode
+#+TITLE: Hasky Mode
 #+AUTHOR: Mark Karpov
 #+DATE: Tuesday, 19 January 2016
 #+STARTUP: showeverything
@@ -147,6 +147,6 @@
    author doesn't care, so we have to do it ourselves. There is a hackish
    solution in my config — a place to start our digging.
 
-* Why “Husky”?
+* Why “Hasky”?
 
   [[https://en.wikipedia.org/wiki/Husky][Huskies]] are cool, just like Haskell.
